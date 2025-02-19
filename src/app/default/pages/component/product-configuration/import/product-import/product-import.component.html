@@ -1,0 +1,70 @@
+<header>
+    <h1>{{'configuration.BulkImport'|translate}}</h1>
+</header>
+<div class="page-content page-min-content">
+    <div class="info-row flexx" *ngIf="closeMessage">
+        <a href="javascript:void(0)" class="info-close" (click)="closeButton()"> <img src="assets/imgs/close.svg" alt=""> </a>
+        <img src="assets/imgs/info-circle-green.svg" alt="">
+        <div class="info-content">
+            <!-- <h4>You have not started a billing plan yet.</h4> -->
+            <p>{{'content.BulkProductImport' | translate}}</p>
+        </div>
+    </div>
+
+    <div class="import-wrapper">
+        <div class="import-inner">
+            <div class="input-group form-group">
+                <div class="input-group mb-35">
+                    <label>{{'configuration.ChooseTemplateType'|translate}} 
+                        <p>{{'configuration.ChooseTemplateInfo'|translate}} </p>
+                    </label>
+                    <div class="ig-radio-check">
+                        <div class="radio">
+                            <input type="radio" value='Standard' [(ngModel)]='chooseType' (change)="onChange()">
+                            <label class="radio-label">
+                                {{'configuration.Standard'|translate}}                           
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" value='Custom' [(ngModel)]='chooseType' (change)="onChange()">
+                            <label class="radio-label">
+                                {{'configuration.Custom'|translate}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="import-file-upload" (dragover)="onDragOver($event)" (drop)="onDrop($event)"
+                    *ngIf="files.length == 0">
+                    <img src="assets/imgs/xcel.svg" alt="" class="mb-3">
+                    <button class="button-reg btn-xs primary">
+                        {{'configuration.Uploadfile'|translate}} 
+                        <input type="file" accept=".zip" (change)="onFileChange($event.target.files)">
+                    </button>
+                    <h5>{{'configuration.drag'|translate}}</h5>
+                    <p>{{'configuration.Supportedfileformat'|translate}}</p>
+                    <p class="mt-2"> {{'configuration.Download'|translate}}
+                        <a href="javascript:void(0)" (click)="downloadFile()"> {{'configuration.SampleCSVtemplate'|translate}}
+                            <mat-spinner
+                            *ngIf="sandbox.downloadFileLoading$ | async" color="black" diameter="20"></mat-spinner>
+                        </a>
+                    </p>
+                    <!-- <span *ngIf="file">{{ file?.name }}</span> -->
+                </div>
+                <ng-container *ngFor="let file of files; let i = index">
+
+                    <div class="import-file-upload" *ngIf="files.length > 0">
+                        <img src="assets/imgs/xcel.svg" alt="" class="mb-3">
+                        <h4>
+                            <span>{{ file.name }}</span>
+                        </h4>
+                        <div class="upload-file-stat">
+                            <span [style.width]="file.progress + '%'"></span>
+                        </div>
+                        <p>{{'configuration.Uploading'|translate}} {{ file.progress | number:'1.0-0' }}%</p>
+                    </div>
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+</div>

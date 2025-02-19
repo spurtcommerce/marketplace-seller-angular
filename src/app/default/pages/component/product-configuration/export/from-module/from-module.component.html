@@ -1,0 +1,39 @@
+<!-- popup -->
+<div class="import-wrapper">
+    <div class="import-inner">
+        <div class="input-group" *ngIf="true">
+            <label>{{'dataExport.ChooseModule' | translate}} *</label>
+            <div class="ig-row">
+                <ng-select [items]="modulesList" [editableSearchTerm]="true" [bindLabel]="translate" [clearable]="false"
+                    [placeholder]="'dataExport.SelectModule' | translate" [(ngModel)]="selectedModule"
+                    (change)="getError()" [ngClass]="{'error-choose-module': chooseModuleError}">
+                    <ng-template ng-label-tmp let-item="item">
+                        <div title="item">{{item.translate | translate}}</div>
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item">
+                        <div title="item">{{item.translate | translate}}</div>
+                    </ng-template>
+                </ng-select>
+            </div>
+            <div *ngIf="chooseModuleError" class="error-choose">
+                Choose Module is required
+            </div>
+        </div>
+        <!-- 
+        <div class="error" style="color: red;font-size: 13px;" *ngIf="['',null,undefined].includes(selectedModule) && submit==true"
+                    >
+                    {{'common.Productdescriptionisrequired' | translate}}
+                </div> -->
+
+        <div class="notex">
+            <p>{{'dataExport.EfficientlyExportData' | translate}}</p>
+        </div>
+    </div>
+</div>
+
+<div class="product-save-btn">
+    <button class="cancel" [routerLink]="['/new-catalog/export/export-data']">
+        {{'dataExport.Cancel' | translate}} </button>
+    <button class="save" (click)="getModule()">
+        {{'dataExport.Export' | translate}} </button>
+</div>

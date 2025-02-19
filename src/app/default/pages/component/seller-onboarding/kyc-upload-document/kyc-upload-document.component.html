@@ -1,0 +1,452 @@
+
+<div>
+  <header class="flex-row">
+      <h1>{{'newContent.Mykyc'|translate}}</h1>
+  </header>
+  <div class="product-add-container ">
+
+      <!-----------tab 1-------------------  -->
+
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+
+          <!-----------tab 3-------------------  -->
+          <li [ngbNavItem]="1">
+              <a ngbNavLink (click)="updateQueryParam()">{{'myShop.UploadDocuments'|translate}}
+                  <ng-container
+                      *ngIf="verificationDetails?.verification?.document==0 && verificationDetails?.kycStatus=='rejected'">❌</ng-container>
+              </a>
+              <ng-template ngbNavContent>
+                  <!--  -->
+                  <div class="page-content  page-min-content" [ngClass]="{'disable':kycStatusMond}">
+
+                      <header class="header-inner">
+                          <!-- <h1>Upload Documents</h1> -->
+                          <div class="header-list flexx">
+                              <div class="inner-heading">
+                                  <p>{{'myShop.AddDocumentInfo'|translate}}</p>
+                              </div>
+
+                              <div class="header-list-rht ms-auto flexx">
+
+                                  <!-- Search -->
+
+                                  <div class="search-filter" ngbDropdown #dropdownContent="ngbDropdown">
+                                      <button tabindex="0" ngbDropdownToggle id="navbarDropdown2" role="button"
+                                          ngbTooltip="Search" role="button" #tooltip="ngbTooltip"
+                                          (mouseleave)="tooltip.close()" placement="bottom">
+                                          <img src="assets/imgs/search.svg" alt="">
+                                      </button>
+                                      <!-- #dropdownContent onclick="event.stopPropagation()" -->
+                                      <div ngbDropdownMenu aria-labelledby="navbarDropdown2"
+                                          class="dropdown-menu dropdown-menu-end">
+                                          <h5>{{'common.Search'|translate}}</h5>
+                                          <div class="input-group">
+                                              <div class="ig-row">
+                                                  <input type="text" placeholder="{{'myShop.Search'|translate}}"
+                                                      appNoLeadingSpace
+                                                      (keyup)="($event.target.value === '' ? clearSearch()  : '') "
+                                                      [(ngModel)]="keyword" #myInput (keydown.enter)="searchItems()"
+                                                      [ngModelOptions]="{standalone:true}">
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <!-- filters -->
+
+                                  <div class="search-filter" ngbDropdown #dropdownContentFilter="ngbDropdown">
+                                      <button tabindex="0" ngbDropdownToggle id="navbarDropdown2" role="button"
+                                          ngbTooltip="Filter" role="button" #tooltip="ngbTooltip"
+                                          (mouseleave)="tooltip.close()" placement="bottom">
+                                          <img src="assets/imgs/filter.svg" alt="">
+                                      </button>
+                                      <!-- #dropdownContentFilter onclick="event.stopPropagation()" -->
+                                      <div ngbDropdownMenu aria-labelledby="navbarDropdown2"
+                                          class="dropdown-menu dropdown-menu-end">
+                                          <h5>{{'myShop.Filter'|translate}}</h5>
+                                          <!-- <form action="">
+                                            <div *ngFor="let val of _object.keys(filterFormFields);let i=index" class="filter-content"> -->
+                                          <!-- <div class="ig-row"> -->
+                                          <!-- <app-reusable-forms [type]="filterFormFields[val]?.type"
+                                                    [control]="filterFormFields[val]?.control" [label]="filterFormFields[val]?.label"
+                                                    [inputId]="filterFormFields[val]?.inputId"
+                                                    [aliasName]="filterFormFields[val]?.aliasName"
+                                                    [customData]="filterFormFields[val]?.customData" (checkboxEmit)="checkedValues($event)"
+                                                    [placeholder]="filterFormFields[val]?.placeholder"></app-reusable-forms> -->
+                                          <!-- </div> -->
+                                          <!-- </div> -->
+                                          <!-- <div class="filter-action">
+                                                <button class="button-reg btn-sm primary" (click)="applyFilter()">
+                                                    {{'common.apply filters'|translate}}
+                                                </button>
+                                                <button class="button-reg btn-sm trans-btn" (click)="resetFilter()">
+                                                    {{'common.reset'|translate}}
+                                                </button>
+                                            </div>
+                                        </form> -->
+                                          <form action="" class="flex" [formGroup]="filterForm">
+                                              <div class="filter-content">
+
+
+                                                  <div class="input-group mb-2">
+                                                      <div class="ig-row">
+                                                          <label for="">
+                                                              <p>{{'myShop.DocumentTitle'|translate}}</p>
+                                                          </label>
+                                                          <div class="ig-row">
+                                                              <ng-select [items]="sellerDocumentList" bindLabel="name"
+                                                                  bindValue="name"
+                                                                  placeholder="{{'myShop.Selectdocument'|translate}}"
+                                                                  formControlName="Title">
+                                                              </ng-select>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+
+                                                  <div class="input-group mb-2">
+                                                      <div class="ig-row">
+                                                          <label for="">
+                                                              {{'myShop.FileName'|translate}}
+                                                          </label>
+                                                          <div class="ig-row">
+                                                              <input type="text" formControlName="fileName" name="id"
+                                                                  appNoLeadingSpace
+                                                                  placeholder="{{'myShop.EnterFileName'|translate}}">
+                                                          </div>
+                                                      </div>
+                                                  </div>
+
+
+
+                                              </div>
+
+                                              <div class="filter-action">
+                                                  <button class="button-reg btn-sm primary"
+                                                      (click)="applyFilter()">{{'myShop.Applyfilters'|translate}}</button>
+                                                  <button class="button-reg btn-sm trans-btn"
+                                                      (click)="filterReset()">{{'myShop.Reset'|translate}}</button>
+                                              </div>
+                                          </form>
+                                      </div>
+                                  </div>
+
+                                  <!-- Dynamic table columns -->
+                                  <!-- <div class="dropdown dynamic-column">
+                                    <button ngbTooltip="Filter" placement="bottom" class="dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="assets/imgs/grid.svg" alt="">
+                                        <img src="assets/imgs/column-orange.svg" alt="">
+                                    </button>
+                                    <div class="dropdown-type dropdown-menu dropdown-menu-right" #dropdownContentDynamicColumn
+                                        onclick="event.stopPropagation()" aria-labelledby="dropdownMenuButton">
+                                        <h4> Available Columns </h4>
+                                        <div class="available-column-list">
+                                            <ng-container *ngFor="let val of availableTableColumns">
+                                                <div class="custom-control custom-checkbox" *ngIf="!val?.isHide">
+                                                    <input class="custom-control-input" [(ngModel)]="val.checked" type="checkbox" value=""
+                                                        [id]="val.id">
+                                                    <label class="custom-control-label" [for]="val.id">
+                                                        {{val.displayName?val.displayName:val?.optionalFilterName}}
+                                                    </label>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        <button class="clm-button" (click)="columnSave()">Save</button>
+                                    </div>
+                                </div> -->
+
+                                  <!-- add Document -->
+                                  <!-- ----------------Dynamic Coloums -->
+                                  <div class="search-filters" ngbDropdown #dropdownContentDynamicColumn="ngbDropdown">
+                                      <button (click)="open()" tabindex="0" ngbDropdownToggle id="navbarDropdown2"
+                                          role="button" ngbTooltip=" {{'common.CustomColumns'|translate}}"
+                                          placement="bottom">
+                                          <img src="assets/imgs/grid.svg" alt="">
+                                      </button>
+                                      <div ngbDropdownMenu aria-labelledby="navbarDropdown2"
+                                          class="dropdown-menu dropdown-menu-end  column-dropdown">
+                                          <h4> {{'common.CustomColumns'|translate}} </h4>
+                                          <div class="available-column-list">
+                                              <ng-container *ngFor="let key of objectKeys(filterColumns);">
+                                                  <div class="form-check">
+                                                      <button><img src="assets/imgs/drag.svg" alt=""></button>
+                                                      <input [id]="key" type="checkbox"
+                                                          class="form-check-input ng-tns-c210-1 ng-valid ng-dirty ng-touched cursor-pointer"
+                                                          [(ngModel)]="filterColumns[key]" (change)="calculateCount()"
+                                                          [disabled]="totalCount<=filterDisableLimit && filterColumns[key]">
+                                                      <label class="custom-control-label cursor-pointer"
+                                                          [for]="key">{{key}}</label>
+                                                  </div>
+                                              </ng-container>
+                                              <div class="custom-col-row flexx">
+                                                  <button (click)="save()"
+                                                      class="button-reg btn-sm primary">{{'common.Save'|translate}}</button>
+                                              </div>
+
+                                          </div>
+                                          <!-- Dynamic table columns -->
+                                      </div>
+                                  </div>
+
+                                  <a data-bs-toggle="modal" data-bs-target="#addDocumentsModal"
+                                      class="link-reg link-sm primary" style="cursor: pointer;"> +
+                                      {{'myShop.AddDocuments'|translate}} </a>
+                              </div>
+                          </div>
+                      </header>
+                      <!-- filter -->
+                      <div class="filter-result-row flexx" *ngIf="_object?.keys(filterSearch)?.length > 0">
+                          <h4>{{'myShop.Filter'|translate}}:</h4>
+                          <div class="filter-result-col" *ngFor="let filter of filterSearch | keyvalue">
+                              <ng-container *ngIf="!['',null,undefined].includes(filter.value)">
+                                  <span>{{ filter.key }} : </span>
+                                  {{ filter.value}}
+                                  <button (click)="removeFilter(filter)" class="remove-btn">
+                                      <img src="assets/imgs/close-sm.svg" alt="" />
+                                  </button>
+
+                                  <!-- <a (click)="removefilter(filter)"><img src="assets/imgs/close-sm.svg" alt=""></a> -->
+                              </ng-container>
+
+
+                              <!-- <a *ngIf="selectAll==true" href="javascript:void(0)" class="clear" (click)="removeFilter()">Clear Filters</a> -->
+                          </div>
+                          <a *ngIf="selectAll" href="javascript:void(0)" class="clear"
+                              (click)="filterReset()">{{'myShop.ClearFilters'|translate}}</a>
+
+                      </div>
+
+                      <div class="table-responsive">
+                          <table class="table">
+                              <thead>
+                                  <tr>
+                                      <th *ngIf="this.backupColumns['DOCUMENT TITLE']">
+                                          {{'myShop.DOCUMENTTITLE'|translate}}</th>
+                                      <th *ngIf="this.backupColumns['FILE NAME']">{{'myShop.FILENAME'|translate}}</th>
+                                      <th *ngIf="this.backupColumns['STATUS']">{{'myShop.STATUS'|translate}}</th>
+                                      <th *ngIf="this.backupColumns['LAST UPLOADED ON']">
+                                          {{'myShop.LASTUPLOADEDON'|translate}}</th>
+                                      <th></th>
+
+                                  </tr>
+                              </thead>
+                              <tbody>
+
+
+                                  <tr class="sell-prd" *ngFor="let data of documentList">
+                                      <td *ngIf="backupColumns['DOCUMENT TITLE']">{{data.document.name}}</td>
+                                      <td *ngIf="this.backupColumns['FILE NAME']">{{data.fileName}}</td>
+                                      <td *ngIf="this.backupColumns['STATUS']"><span class="status-badge"
+                                              [ngClass]="{'pending': data.isVerified == 0, 'active': data.isVerified == 1, 'inactive': data.isVerified == 2}">{{
+                                              data.isVerified == 0 ? ('payments.Pending'|translate) : data.isVerified
+                                              == 1 ?
+                                              ('payments.Approved'|translate):('payments.Rejected'|translate)
+                                              }}</span></td>
+                                      <td *ngIf="this.backupColumns['LAST UPLOADED ON']">{{data.modifiedDate
+                                          ?(data.modifiedDate|date :
+                                          'dd/MM/YYYY'):(data.createdDate |date : 'dd/MM/YYYY') }}</td>
+                                      <td class="text-end">
+                                          <div ngbDropdown container="body" class="d-inline-block">
+                                              <button type="button" class="" id="dropdownBasic1" ngbDropdownToggle>
+                                                  <img src="assets/imgs/v-dots.svg" alt="">
+                                              </button>
+                                              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                                  <!-- <h5>Actions</h5> -->
+                                                  <a href="javascript:void(0)" ngbDropdownItem
+                                                      (click)="downloadDocument(data)">
+                                                      {{'myShop.Download'|translate}} </a>
+                                                  <a href="javascript:void(0)" ngbDropdownItem
+                                                      (click)="timeLineDocument(data)">{{'myShop.TimeLine'|translate}}
+                                                  </a>
+                                              </div>
+                                          </div>
+                                      </td>
+
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+
+                      <div class="nodata flexx"
+                          *ngIf="(sandbox.getDocumentList$ | async) && (sandbox.documentListLoaded$ | async) && (sandbox.getDocumentList$ | async).length == 0">
+                          <span><img src="assets/imgs/img.svg" alt=""></span>
+                          <h4>{{'myShop.NoDocumentsYet'|translate}}</h4>
+                          <p>{{'myShop.UploadCertificateNote'|translate}}</p>
+                          <a href="javascript:void(0)" class="link-reg link-sm primary" data-bs-toggle="modal"
+                              data-bs-target="#addDocumentsModal">
+                              +{{'myShop.AddDocuments'|translate}} </a>
+                      </div>
+                      <div class="pagination flexx">
+                          <app-reusable-pagination *ngIf="(sandbox.getDocumentCount$ | async)  > 0"
+                              class="pagination flexx" [type]="'numbers'" [currentPage]="1" [pageSize]="limit"
+                              [totalItems]="sandbox.getDocumentCount$ | async"
+                              (pageChange)="onPageChange($event)"></app-reusable-pagination>
+                          <!-- <button> <img src="assets/imgs/CaretLeft.svg" alt=""> </button>
+                        <input type="text" value="1">
+                        <button> <img src="assets/imgs/CaretRight.svg" alt=""> </button>
+                        <p>of 100</p> -->
+                      </div>
+
+                  </div>
+
+                  <!-- Reusable Nodata found -->
+                  <!-- <div class="d-flex justify-content-center"
+                    *ngIf="(sandbox.getDocumentList$ | async) && (sandbox.documentListLoaded$ | async) && (sandbox.getDocumentList$ | async).length == 0">
+                    <div class="no-listings flexx">
+                        <img src="assets/imgs/no-listings.svg" alt="">
+                        <h6>No Listings Available</h6> -->
+                  <!-- <p>We're sorry, the page you requested could not be found please go back to the create page</p> -->
+                  <!-- </div>
+                </div> -->
+
+
+                  <!-- Add Document Modal -->
+                  <div class="modal fade assignattributesmodal" id="addDocumentsModal" data-bs-backdrop="static"
+                      data-bs-keyboard="false" tabindex="-1" aria-labelledby="addDocumentsModalLabel"
+                      aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                              <div class="modal-heading">
+                                  <h3>{{'myShop.AddDocuments'|translate}}</h3>
+                              </div>
+                              <div class="modal-body">
+                                  <!-- <button class="close-modal" data-bs-dismiss="modal" (click)="cancelUpload()"><img
+                                        src="assets/imgs/close-white.svg" alt="" class="default-icon img-dark"
+                                        style="height: 17px;">
+                                    <img src="assets/imgs/close-modal.svg" alt=""></button> -->
+                                  <div class="delete-wrap">
+                                      <!-- <p>Provide a title for each of your supporting document and upload.</p> -->
+                                      <!-- <div class="changeemail-form">
+                                    <div class="ig-row" *ngFor="let val of _object.keys(addDocumentFormFields)">
+                                        <app-reusable-forms [type]="addDocumentFormFields[val]?.type"
+                                            [control]="addDocumentFormFields[val]?.control"
+                                            [label]="addDocumentFormFields[val]?.label"
+                                            [inputId]="addDocumentFormFields[val]?.inputId"
+                                            [aliasName]="addDocumentFormFields[val]?.aliasName"
+                                            [customData]="addDocumentFormFields[val]?.customData"
+                                            [placeholder]="addDocumentFormFields[val]?.placeholder"
+                                            [mandatory]="addDocumentFormFields[val]?.mandatory"
+                                            [isDisabled]="addDocumentFormFields[val]?.isDisabled" [submitted]="submitted">
+                                        </app-reusable-forms>
+                                    </div>
+                                    <div class="media-add-files" (click)="displayError()">
+                                        <button [ngClass]="{'disable-div': !addDocumentForm.value['Document Title']}"> <img
+                                                src="assets/imgs/file.svg" alt="" /> Add Document <input type="file"
+                                                accept=".pdf, .doc, .xls, .txt" name="file" (change)="addDocumentFile($event)" />
+                                        </button>
+                                        <p>Accept only .pdf,.doc,.xls,.txt extension</p>
+                                        <p class="text-danger" *ngIf="!uploadFileLocation && submitted">Please select a File</p>
+                                    </div>
+                                    <div class="added-docs flex" *ngIf="uploadFileLocation">
+                                        <p>{{uploadFileLocation.file}}</p>
+                                        <button (click)="this.uploadFileLocation = ''"> <img src="assets/imgs/delete.svg"
+                                                alt="delete"> </button>
+                                    </div>
+                                </div> -->
+                                      <div class="certification-col">
+                                          <form [formGroup]="documentForm">
+                                              <div class="input-group mb-35">
+                                                  <label>
+                                                      {{'myShop.DocumentType'|translate}} *
+                                                  </label>
+                                                  <div class="ig-row">
+                                                      <ng-select [items]="sellerDocumentList" bindLabel="name"
+                                                          bindValue="id" (change)="documentValidation()"
+                                                          placeholder="{{'myShop.Selectdocument'|translate}}"
+                                                          formControlName="documentType"
+                                                          [ngClass]="{'error-color':(documentForm.controls['documentType'].hasError('required') && documentSubmitted ) || doumentTypeValid }">
+                                                      </ng-select>
+                                                  </div>
+                                                  <div *ngIf="(documentForm.controls['documentType'].hasError('required') && documentSubmitted ) || doumentTypeValid"
+                                                      class="error-data">{{'myShop.DocumentTypeisrequired'|translate}}
+                                                  </div>
+                                              </div>
+                                              <div class="loading"
+                                                  *ngIf="(sandbox.getmediauploadRequestLoading$ | async)">
+                                                  <app-loader></app-loader>
+                                              </div>
+                                              <div class="input-group">
+                                                  <label>
+                                                      {{'myShop.UploadCertificate'|translate}} *
+                                                      <p>{{'myShop.AddDocumentNote'|translate}} </p>
+                                                  </label>
+                                                  <div class="ig-row">
+                                                      <div class="create-capabilities flexx">
+                                                          <img src="assets/imgs/certificates.svg" alt="">
+                                                          <h4>{{'myShop.UploadCertificate'|translate}}</h4>
+                                                          <p>{{'myShop.UploadRelaventDoc'|translate}}</p>
+                                                          <a href="javascript:void(0)"> <input type="file"
+                                                                  (click)="$event.target.value = null"
+                                                                  (change)="addDocumentFile($event)"
+                                                                  style="cursor: pointer;height: 100%;"> </a>
+                                                      </div>
+                                                      <p style="font-size: .75rem;font-weight: 400;">
+                                                          {{documentMessage}}
+                                                      </p>
+                                                      <div *ngIf="!documentFileType && !documentFileSize &&(['',null,undefined].includes(uploadFileLocation?.file)) && documentSubmitted==true"
+                                                          class="error-data">
+                                                          {{'myShop.UploadCertificateisrequired'|translate}}</div>
+                                                      <!-- <div *ngIf="documentFileType && !['',null,undefined].includes(uploadFileLocation?.file)"
+                                                          class="error-data">
+                                                          {{'myShop.Pleaseselectapdffileonly'|translate}}
+                                                      </div> -->
+                                                    
+                                                      <div *ngIf="documentFileType && ['',null,undefined].includes(uploadFileLocation?.file)"
+                                                          class="error-data">
+                                                          {{'myShop.Pleaseselectapdffileonly'|translate}}
+                                                      </div>
+                                                      <div *ngIf="!documentFileType && documentFileSize"
+                                                          class="error-data">
+                                                          {{'myShop.PleaseUploadBelow4MB'|translate}} {{errorsize}} MB
+                                                      </div>
+                                                          <div class="added-certificates flexx"
+                                                              *ngIf="!['',null,undefined].includes(uploadFileLocation?.file)">
+
+                                                              <p>{{uploadFileLocation?.file}}</p>
+                                                              <button (click)="removeDocument()"> <img
+                                                                      src="assets/imgs/delete.svg" alt="">
+                                                              </button>
+                                                          </div>
+                                                  </div>
+                                              </div>
+                                          </form>
+                                      </div>
+
+                                  </div>
+
+                                  <!-- <div class="save-row flex">
+                                    <button class="cancel" #closeAddDocumentsModal data-bs-dismiss="modal"
+                                        (click)="cancelUpload()">Cancel</button>
+                                    <button class="button-reg btn-sm primary"
+                                        [ngClass]="{'btn-disabled': sandbox.updateDocumentLoading$ | async}"
+                                        (click)="createDocument()">Proceed <mat-spinner
+                                            *ngIf="sandbox.updateDocumentLoading$ | async" color="black"
+                                            diameter="20"></mat-spinner>
+                                    </button>
+                                </div> -->
+
+                              </div>
+                              <!-- data-bs-dismiss="modal" -->
+                              <div class="product-save-btn modal-save-btn">
+                                  <button class="cancel" data-bs-dismiss="modal" (click)="cancelUpload()"
+                                      #closeAddDocumentsModal>{{'myShop.Cancel'|translate}}</button>
+                                  <button class="save" (click)="createDocument()">{{'myShop.Save'|translate}}</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="product-save-btn">
+                      
+                      <!--  -->
+                      <button class="save"  [ngClass]="{'disable':kycStatusMond}"  
+                          (click)="uploadSubmit()">{{'newContent.SenttoApproval'|translate}}</button>
+
+                  </div>
+              </ng-template>
+          </li>
+          <!-----------tab 4-------------------  -->
+
+      </ul>
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+  </div>
+</div>

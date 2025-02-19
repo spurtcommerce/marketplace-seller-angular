@@ -1,0 +1,22 @@
+<div class="modal-body">
+    <button type="button" class="close" >
+        <span aria-hidden="true" style="background-color:white;" (click)="dismiss()">&times;</span>
+    </button>
+    <p>{{message}}</p>
+
+  
+
+    <!-- <p>{{text}}</p> -->
+
+
+    <!-- <h4> Record Name </h4> -->
+    <h4></h4>
+    <!-- <h4>  {{'CommonFormAll.Doyouwanttodelete'| translate}} </h4> -->
+    <div class="delete-btns flex">
+        <button type="button" class="btn btn-success" style="margin: 10px 175px;" (click)="clickhere()">{{'configuration.Ok'|translate}}</button>
+        <!-- <button type="button" class="btn btn-success" (click)="deleteContent()">{{'common.Delete'|translate}}  </button> -->
+        <!-- <button type="button" class="btn btn-danger" (click)="close()"> {{'CommonFormAll.Cancel' | translate}}  </button>
+        <button type="button" class="btn btn-success" (click)="deleteContent()"> {{'CommonFormAll.Yes' | translate}}</button> -->
+    </div>
+</div>
+

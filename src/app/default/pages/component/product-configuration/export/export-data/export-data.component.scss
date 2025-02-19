@@ -1,0 +1,93 @@
+.product-table {
+    .table-responsive {
+        .table {
+            tbody {
+                tr {
+                    td {
+                        .exported-by {
+                            display: grid;
+                            grid-template-columns: 1rem 1fr;
+                            align-items: center;
+                            gap: 0.5rem;
+
+                            span {
+                                width: 1rem;
+                                height: 1rem;
+                                border-radius: 50%;
+                                overflow: hidden;
+                                background-color: #D9D9D9;
+
+                                img {
+                                    width: 100%;
+                                }
+                            }
+                        }
+
+                        .status-data {
+                            display: grid;
+                            grid-template-columns: 6px 1fr;
+                            align-items: center;
+                            gap: 0.5rem;
+
+                            span {
+                                width: 6px;
+                                aspect-ratio: 1;
+                                border-radius: 50%;
+
+                                &.inprocess {
+                                    background-color: #E68D02;
+                                }
+
+                                &.completed {
+                                    background-color: #078E05;
+                                }
+                            }
+                        }
+
+                        .primary-text {
+                            color: #078E05;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 4px;
+                            background-color: transparent;
+                            border: 0;
+                            visibility: hidden;
+                        }
+                    }
+
+                    &:hover {
+                        td {
+                            .primary-text {
+                                display: inline-flex;
+                                visibility: visible;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.dropdown-menu {
+    min-width: 13.5rem;
+    box-shadow: 0 2px 4px #1832471f;
+    border-radius: .3125rem;
+    border: 0;
+}
+
+.product-content {
+    padding: 1rem;
+}
+
+.disabled-class {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .spinner-wrapper {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    inset: 50%;
+}

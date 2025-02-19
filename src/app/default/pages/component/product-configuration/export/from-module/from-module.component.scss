@@ -1,0 +1,39 @@
+.product-save-btn {
+    position: fixed;
+    width: calc(100vw - 289px);
+    right: 0;
+    left: auto !important;
+}
+
+.ig-row p sup {
+    color: #C82124;
+}
+
+
+.import-wrapper .import-inner .notex p {
+    padding: 50px 0px 0px 0px;
+    color: #152027;
+    font-size: 12px;
+    font-weight: 400;
+    text-align: center;
+}
+
+
+.import-wrapper {
+    max-width: 50.25rem;
+    margin: 12.625rem auto;    
+    border-radius: .1875rem;
+    border: 1px solid #EDEDED;
+    background: #FFF;
+    padding: 1.625rem;
+}
+
+.error-choose{
+color: red;
+font-size: 13px;
+}
+
+.error-choose-module{
+    border: 1px solid red;
+    }
+

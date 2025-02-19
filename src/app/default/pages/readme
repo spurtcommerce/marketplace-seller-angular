@@ -1,0 +1,51 @@
+## ❯  🚀 Deploy Frontend Seller (Angular)
+
+
+### Step 1:
+
+Navigate to "/var/www/html" (assuming Apache installation has created this directory) from your home directory in your local or server
+
+### Step 2:
+
+*  Copy the "seller" folders as-is directly from "multivendor-marketplace/frontend/" to "/var/www/html/".
+
+*  Copy all folders & files of "seller" folder from multivendor-marketplace/frontend/ folder and paste it directly into /var/www/html/
+
+Completion of above steps should successfully setup frontend builds of all seller panels of Spurtcommerce Marketplace solution such as seller Panel
+
+* marketplace website is ready to use from  http://{your-domian or IP} (or) http://localhost/
+* Seller Panel can be accessed by http://{your-domian or IP}/seller/#/auth/login 
+
+Above steps concludes successful installation and setup of Spurtcommerce Marketplace solution build in your local (or) server.
+
+# Screenshots
+![2](https://raw.githubusercontent.com/spurtcommerce/spurtcommerce/refs/heads/master/assets/spurtcommerce-github-2.jpg)
+![3](https://raw.githubusercontent.com/spurtcommerce/spurtcommerce/refs/heads/master/assets/spurtcommerce-github-3.jpg)
+![4](https://raw.githubusercontent.com/spurtcommerce/spurtcommerce/refs/heads/master/assets/spurtcommerce-github-6.jpg)
+![5](https://raw.githubusercontent.com/spurtcommerce/spurtcommerce/refs/heads/master/assets/spurtcommerce-github-1.jpg)
+
+
+## 🤔 Support , Document and Help
+
+Spurtcommerce 5.1.0 is published to npm under the `@spurtcommerce/*` namespace.
+
+You can find our extended documentation on our [www.spurtcommerce.dev](https://www.spurtcommerce.dev), but some quick links that might be helpful:
+
+- Read [Technology](https://www.spurtcommerce.com/opensource-ecommerce-multivendor-nodejs-react-angular) to learn about our vision and what's in the box.
+- Our [Discard](https://discord.com/invite/hyW4MXXn8n) Questions, Live Discussions [Spurtcommerce Support](https://accounts.spurtcommerce.com/#/auth/login-client).
+- Some [Video](https://www.youtube.com/@Spurtcommerce/videos) Video Tutorials 
+- Every [Release](https://github.com/spurtcommerce/multivendor-marketplace/releases) is documented on the Github Releases page.
+
+🐞 If you spot a bug, please [submit a detailed issue](https://github.com/spurtcommerce/multivendor-marketplace/issues/new), and wait for assistance.
+
+🤔 If you have a question or feature request, please [start a new discussion](https://github.com/orgs/spurtcommerce/discussions/new/choose). 
+  
+🤔 This project is tested with BrowserStack
+
+## ❯ Maintainers
+Spurtcommerce is developed and maintain by [Piccosoft Software Labs India (P) Limited,](https://www.piccosoft.com).
+
+
+## ❯ License
+
+Spurtcommerce is released under the [BSD-3-Clause License.](https://github.com/spurtcommerce/spurtcommerce/blob/master/LICENSE).

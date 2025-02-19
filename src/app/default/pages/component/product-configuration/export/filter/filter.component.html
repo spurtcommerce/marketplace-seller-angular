@@ -1,0 +1,45 @@
+<form [formGroup]="filterForm" class="flex" (ngSubmit)="applyFilter()">
+    <div class="filter-content">
+        <div class="input-group">
+            <div class="ig-row">
+                <label for="keyword">{{'dataExport.SelectModule' | translate}}</label>
+            </div>
+            <div class="ig-row">
+                <ng-select [items]="modulesList" [placeholder]="'dataExport.SelectModule' | translate"
+                    [searchable]="false" [bindLabel]="'translate'" formControlName="module" [clearable]="false"
+                    [editableSearchTerm]="true" [(ngModel)]="selectedModule">
+                    <ng-template ng-label-tmp let-item="item">
+                        <div title="item">{{item.translate | translate}}</div>
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item">
+                        <div title="item">{{item.translate | translate}}</div>
+                    </ng-template>
+                </ng-select>
+            </div>
+        </div>
+        <div class="input-group mb-2">
+            <div class="ig-row">
+                <label for="sku">{{'dataExport.SelectUser' | translate}}</label>
+            </div>
+            <div class="ig-row">
+                <input type="text" [placeholder]="'dataExport.SelectUser' | translate" formControlName="users">
+            </div>
+        </div>
+        <div class="input-group">
+            <div class="ig-row">
+                <label>{{'configuration.DateAdded'|translate}}  </label>
+            </div>
+            <div class="ig-row">
+                <mat-form-field class="floating-date">
+                    <input matInput [matDatepicker]="picker" class="date" formControlName="date" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="filter-action">
+            <button type="button" class="button-reg btn-sm trans-btn" (click)="resetFilter()">{{'configuration.Reset'|translate}}  </button>
+            <button type="submit" class="button-reg btn-sm primary"> {{'configuration.ApplyFilter'|translate}} </button>
+        </div>
+    </div>
+</form>

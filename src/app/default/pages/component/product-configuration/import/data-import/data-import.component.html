@@ -1,0 +1,92 @@
+<header>
+    <h1>{{'common.ImportFile'| translate}} </h1>
+</header>
+<div class="page-content page-min-content">
+    <div class="info-row flexx">
+        <a href="javascript:void(0)" class="info-close"> <img src="assets/imgs/close.svg" alt=""> </a>
+        <img src="assets/imgs/info-circle-green.svg" alt="">
+        <div class="info-content">
+            <p>{{'configuration.Info'|translate}}</p>
+        </div>
+    </div>
+    <div class="import-wrapper">
+        <div class="import-inner">
+            <div class="input-group mb-35">
+                <label> {{'configuration.ChooseTemplateType'|translate}}
+                    <p>{{'configuration.ChooseTemplateInfo'|translate}} </p>
+                </label>
+                <div class="ig-radio-check">
+                    <div class="radio">
+                        <input type="radio" value='Standard' [(ngModel)]='chooseType' (change)="onChange()">
+                        <label class="radio-label">
+                            {{'configuration.Standard'|translate}}                           
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <input type="radio" value='Custom' [(ngModel)]='chooseType' (change)="onChange()">
+                        <label class="radio-label">
+                            {{'configuration.Custom'|translate}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-35">
+                <label for="">{{'common.FromModule'| translate}}
+                    <p>{{'CommonContent.chooseModule' | translate}}</p>
+                </label>
+                <div class="ig-row">
+                    <ng-select [items]="access" [clearable]="false" bindLabel="name" bindValue="name"
+                        placeholder="{{'common.SelectModule'| translate}}" [(ngModel)]="selectedaccess"
+                        (change)="uploadModel()"
+                        [ngClass]="{errorStatus:FileErrorStatue=='Validation.Please Select Module Name'}">
+                    </ng-select>
+                    <p *ngIf="FileErrorStatue=='Validation.Please Select Module Name'" class="validation-error"
+                        [ngClass]="{errorStatus_value: FileErrorStatue=='Validation.Please Select Module Name'}">
+                        {{FileErrorStatue |translate}}</p>
+                </div>
+            </div>
+            <div class="input-group form-group" [ngClass]="{'is-uploading': isUploading}"
+                (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+                <div *ngIf="!isUploading" class="import-file-upload"
+                    [ngClass]="{errorStatus:['Validation.Pleace Upload Excel File','Validation.Only Excel File are allowed','Validation.File should be less than 2MB','Validation.No Data Found','Validation.Duplicate Value Found','Validation.Cannot use multiple files'].includes('ErrorStatus')}">
+                    <img src="assets/imgs/xcel.svg" alt="" class="mb-3">
+                    <button class="button-reg btn-xs primary"> {{'configuration.Uploadfile'|translate}}
+                        <input type="file" (click)="$event.target.value=null" (change)="onFileChange($event)"
+                            multiple="false" accept=".xlsx, .xls,.ods,.csv">
+                    </button>
+                    <h5>{{'configuration.drag'|translate}}</h5>
+                    <p>{{'configuration.Supported'|translate}}</p>
+                    <br>
+                    <span *ngIf="fileName">{{ fileName }}</span>
+                    <span *ngIf="!fileName">{{ selectedFile?.name }}</span>
+                </div>
+                <div class="import-file-upload" *ngIf="isUploading">
+                    <img src="assets/imgs/xcel.svg" alt="" class="mb-3">
+                    <h4>
+                        <span *ngIf="fileName">{{ fileName }}</span>
+                        <span *ngIf="!fileName">{{ selectedFile?.name }}</span>
+                    </h4>
+                    <div class="upload-file-stat">
+                        <span></span>
+                    </div>
+                    <p>{{'configuration.UploadingPlease'|translate}}</p>
+                </div>
+              
+                <p class="validation-error"
+                    *ngIf="['Validation.Please Upload Excel File','Validation.Only Excel File are allowed','Validation.File should be less than','Validation.No Data Found','Validation.Duplicate Value Found','Validation.Cannot use multiple files'].includes(ErrorStatus)"
+                    [ngClass]="{errorStatus_value:['Validation.Pleace Upload Excel File','Validation.Only Excel File are allowed','Validation.File should be less than','Validation.No Data Found','Validation.Duplicate Value Found','Validation.Cannot use multiple files'].includes(ErrorStatus)}">
+                    
+                    <span *ngIf="'Validation.File should be less than'==ErrorStatus; else no">{{ErrorStatus |translate}} {{fileMBSize}} MB</span>
+                    <ng-template #no>{{ErrorStatus |translate}}</ng-template>
+                    
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="import-next-cancel product-save-btn flex mt-auto">
+    <button class="cancel" (click)="reset()"> {{'common.Cancel'| translate}} </button>
+    <button class="save" [ngClass]="{disabled : isUploading}" (click)="ImportPage()">{{'common.Next'| translate}}
+    </button>
+</div>
