@@ -1,16 +1,9 @@
 <h1 align="center" style="border-bottom: none">
-    <div>
-       <a style="color:#36f" href="https://www.spurtcommerce.com/#gh-light-mode-only">
-            <img src="https://www.spurtcommerce.com/spurtcommerce.svg" width="318px" alt="Spurtcommerce logo" />
-            <br>
-           🎉 <a target="_blank" href="https://www.spurtcommerce.com/spurtcommerce-change-log" rel="dofollow"> <strong>Spurtcommerce v5.1 is now available!</strong> 
-        </a>
-    </div>
-    Opensource Multi Vendor Marketplace for B2C , B2B  <br>
+    Marketplace Seller Panel 
 </h1>
 
-<p align="center">
- Build with Nodejs + TypeScript + Angular + React + MySQL and PostgreSQL
+<p >
+ A marketplace vendor panel lets sellers manage their products, orders, inventory, and payouts, while also tracking sales performance, customer interactions, and promotions to grow their business.🚀
 </p>
 
 
