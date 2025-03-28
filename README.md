@@ -1,9 +1,16 @@
 <h1 align="center" style="border-bottom: none">
-    Marketplace Seller Panel 
+    <div>
+       <a style="color:#36f" href="https://www.spurtcommerce.com/#gh-light-mode-only">
+            <img src="https://www.spurtcommerce.com/spurtcommerce.svg" width="318px" alt="Spurtcommerce logo" />
+            <br>
+           🎉 <a target="_blank" href="https://www.spurtcommerce.com/spurtcommerce-change-log" rel="dofollow"> <strong>Spurtcommerce v5.1 is now available!</strong> 
+        </a>
+    </div>
+    Opensource Multi Vendor Marketplace for B2C , B2B  <br>
 </h1>
 
-<p >
- A marketplace vendor panel lets sellers manage their products, orders, inventory, and payouts, while also tracking sales performance, customer interactions, and promotions to grow their business.🚀
+<p align="center">
+ Build with Nodejs + TypeScript + Angular + React + MySQL and PostgreSQL
 </p>
 
 
@@ -34,27 +41,67 @@
 
 
 
-<br />
+## ❯  🚀 Set up Frontend Seller (Angular)
 
-## ❯  🚀 Deploy Frontend Seller (Angular)
 
+If you want to create a local repository so that you can use tools such as Git...
+
+## ❯ Prerequisites
+
+ Node.js - v^18.20 or newer
+
+ Angular version - v^17 
 
 ### Step 1:
 
-Navigate to "/var/www/html" (assuming Apache installation has created this directory) from your home directory in your local or server
+ *To clone the Seller folder to your local using below command.
 
-### Step 2:
+```
+ git clone  https://github.com/spurtcommerce/marketplace-seller-angular.git
+```
+### Step 2: (Optional)
 
-*  Copy the "vendor" folders as-is directly from "dist/" to "/var/www/html/".
+*If you using below Node.js version 18.20 Using below command:
 
-*  Rename the "vendor" folder to "seller" folder and paste it directly into /var/www/html/
+```
+    nvm use 18.20
+```
+### Step 3:
+*  Install the necessary packages on your local by running:
+```
+  npm install
+```
+### Step 4:
+* To edit environment file in your local for environment file setup.
+   
+    File name : environment.ts
+    
+Example : 
+baseUrl: '<'Your api_base_url'>', // eg:'https://your-web-site.com/api'
 
-Completion of above steps should successfully setup frontend builds of all seller panels of Spurtcommerce Marketplace solution such as seller Panel
+ImageUrl: '<'Your API url for image resize'>',   //eg:'https://your-web-site.com-image/'
 
-* marketplace website is ready to use from  http://{your-domian or IP} (or) http://localhost/
-* Seller Panel can be accessed by http://{your-domian or IP}/seller/#/auth/login 
+### Step 5:
+* Ensure that all of the above steps are successfully implemented. After that, run the code with the following command:
+```
+ npm run large-serve 
+```
+   To view it in your browser, go to : http://localhost:4200/#/auth/login 
 
-Above steps concludes successful installation and setup of Spurtcommerce Marketplace solution build in your local (or) server.
+### step 6:
+* If you want to create a build, set up the environment.prod.ts file, and then execute the following command to generate the build:
+```
+ npm run large-build
+```
+Once successfully executed, a build file will be created in the dist folder
+
+* Following these steps will successfully install and set up the Spurtcommerce Marketplace solution on your local machine (or server).
+
+The Seller Panel can be accessed at:
+
+*  http://{your-domian or IP}/seller/#/auth/login 
+
+Upon completion of the above steps, the build of the seller panel should be successfully set up.
 
 ## 🤔 Support , Document and Help
 
@@ -80,3 +127,4 @@ Spurtcommerce is developed and maintain by [Piccosoft Software Labs India (P) Li
 ## ❯ License
 
 Spurtcommerce is released under the [BSD-3-Clause License.](https://github.com/spurtcommerce/spurtcommerce/blob/master/LICENSE).
+
